@@ -44,8 +44,8 @@ bookingRoute.post("/create-checkout-session", async (req, res) => {
             payment_method_types: ["card"],
             line_items: lineItems,
             mode: "payment",
-            success_url: "http://localhost:5173/my-appointments",
-            cancel_url: "http://localhost:5173/my-appointments",
+            success_url: "https://prescripto-6puy.vercel.app/my-appointments",
+            cancel_url: "https://prescripto-6puy.vercel.app/my-appointments",
             metadata: {
                 orderId: orderId,
                 appointmentId: appointmentId,
