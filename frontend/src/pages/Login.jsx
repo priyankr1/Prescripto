@@ -1,35 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-  const {backendUrl,token,setToken}=useContext(AppContext)
+  const { backendUrl, token, setToken } = useContext(AppContext)
   const [state, setstate] = useState('Sign up')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
 
   const onSubmitHandler = async (event) => {
     event.preventDefault()
     try {
-      if(state==='Sign up'){
-        const {data}=await axios.post(backendUrl+'/api/user/register',{name,password,email})
-        if(data.success){
-          localStorage.setItem('token',data.token)
+      if (state === 'Sign up') {
+        const { data } = await axios.post(backendUrl + '/api/user/register', { name, password, email })
+        if (data.success) {
+          localStorage.setItem('token', data.token)
           setToken(data.token)
-        }else{
+        } else {
           toast.error(data.message)
         }
-      }else{
-        const {data}=await axios.post(backendUrl+'/api/user/login',{password,email})
-        if(data.success){
-          localStorage.setItem('token',data.token)
+      } else {
+        const { data } = await axios.post(backendUrl + '/api/user/login', { password, email })
+        if (data.success) {
+          localStorage.setItem('token', data.token)
           setToken(data.token)
-        }else{
+        } else {
           toast.error(data.message)
         }
       }
@@ -37,11 +37,11 @@ const Login = () => {
       toast.error(data.message)
     }
   }
-  useEffect(()=>{
-    if(token){
+  useEffect(() => {
+    if (token) {
       navigate('/')
     }
-  },[token])
+  }, [token])
   return (
     <form onSubmit={onSubmitHandler} className='min-h-[80vh] flex items-center'>
       <div className='flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-sm shadow-lg'>
@@ -50,7 +50,7 @@ const Login = () => {
         {
           state === 'Sign up' && <div className='w-full '>
             <p>Full Name</p>
-            <input className='border border-zinc-300 rounded w-full p-2 mt-3' type="text" onChange={(e) => setName(e.target.value )} value={name} required />
+            <input className='border border-zinc-300 rounded w-full p-2 mt-3' type="text" onChange={(e) => setName(e.target.value)} value={name} required />
           </div>
         }
 
